@@ -1,0 +1,68 @@
+html {
+    background: #c7d1d8;
+    font-family: "Verdana","Helvetica Neue", sans-serif;
+}
+
+header h1 {
+    padding: 0.4em 1.1em;
+    color: white;
+    font-weight: normal;
+    font-size: 30px;
+    font-family: "Verdana","Helvetica Neue", sans-serif;
+}
+
+section#main {
+    position: relative;
+    padding: 2em 2em 2em 2em;
+    border-bottom: 1px solid #ccc;
+    min-height: 500px;
+    font-family: "Verdana","Helvetica Neue", sans-serif;
+}
+
+section#main .topRight {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+}
+
+table.risks em {
+    color: #aaa;
+}
+
+table.risks .introduced, table.risks .description {
+    width: 10%;
+    min-width: 100px;
+}
+
+table.risks .matrixunit_name {
+    width: 30%;
+    min-width: 300px;
+}
+
+table.risks .header a {
+}
+
+#actions {
+    position: relative;
+}
+
+#actions #add {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#pagination {
+    position: relative;
+}
+
+#pagination ul {
+    position: absolute;
+    right: 0;
+}
+
+#pagination ul .current a {
+    color: #666;
+}
+
+

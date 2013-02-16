@@ -1,0 +1,36 @@
+@(riskForm: Form[Risk])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main {
+
+    <h1>Add a risk</h1>
+
+    @form(routes.Application.save()) {
+
+        <fieldset>
+
+            @inputText(riskForm("name"), '_label -> "Risk name")
+            @inputText(riskForm("description"), '_label -> "Risk description")
+            @inputText(riskForm("introduced"), '_label -> "Introduced date")
+
+            @select(
+                riskForm("matrixunit.id"),
+                options(Matrixunit.options),
+                '_label -> "Matrixunit", '_default -> "-- Choose a matrixunit --",
+                '_showConstraints -> false
+            )
+
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Create this risk" class="btn primary"> or
+            <a href="@routes.Application.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+}

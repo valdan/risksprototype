@@ -1,0 +1,5 @@
+# Messages
+
+risks.list.title={0,choice,0#No risks|1#One risk|1<{0,number,integer} risks} found
+
+

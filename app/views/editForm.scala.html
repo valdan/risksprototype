@@ -1,0 +1,47 @@
+@(id: Long, riskForm: Form[Risk], user: User)
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main {
+
+    <h1>Edit risk</h1>
+
+    <dl id="user">
+        <dt>@user.name <span>(@user.email)</span></dt>
+    </dl>
+
+    @form(routes.Application.update(id)) {
+
+        <fieldset>
+
+            @inputText(riskForm("name"), '_label -> "Risk name")
+            @inputText(riskForm("description"), '_label -> "Risk description")
+
+			@if(user.name == "a") {
+				@inputText(riskForm("introduced"), '_label -> "Introduced date")
+			} else {
+			}
+
+            @select(
+                riskForm("matrixunit.id"),
+                options(Matrixunit.options),
+                '_label -> "Matrixunit", '_default -> "-- Choose a matrixunit --",
+                '_showConstraints -> false
+            )
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Save this risk" class="btn primary"> or
+            <a href="@routes.Application.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+    @form(routes.Application.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this risk" class="btn danger">
+    }
+
+}
