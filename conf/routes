@@ -10,6 +10,8 @@ POST    /login                  controllers.Application.authenticate()
 GET     /logout                 controllers.Application.logout()
 
 GET     /admin                  controllers.Application.admin()
+GET     /reports                controllers.Application.reports()
+GET     /risksReports           controllers.Application.risksReports()
 
 # Users
 GET     /users                  controllers.Application.listUsers()

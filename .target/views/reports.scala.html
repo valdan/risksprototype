@@ -1,0 +1,18 @@
+@(user: User)
+
+@main {
+
+    <h1 id="homeTitle">Reports</h1>
+
+	<dl id="user">
+        <dt>Current user: @user.name <span>(@user.email)</span></dt>
+        <dt>Current user role: <span>@User.getRole(user.id)</span></dt>
+    </dl>
+
+	<h2>
+	    <ul>
+	   		<a href="@routes.Application.risksReports()">Risks Sample Report</a>
+	    </ul>
+    </h2>
+
+}

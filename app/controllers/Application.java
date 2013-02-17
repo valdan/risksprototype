@@ -7,6 +7,9 @@ import views.html.*;
 import models.*;
 import com.typesafe.plugin.*;
 import javax.mail.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import org.apache.poi.xssf.usermodel.*;
 
 /**
  * Manage a database of risks
@@ -37,6 +40,37 @@ public class Application extends Controller {
     	return ok(
             admin.render(User.findByName(request().username()))
         );
+    }
+
+
+    @Security.Authenticated(Secured.class)
+    public static Result reports() {
+    	return ok(
+            reports.render(User.findByName(request().username()))
+        );
+    }
+
+
+    public static Result risksReports() {
+
+    	File file = new File("test.xlsx");
+
+    	try {
+	    	FileOutputStream fileOut = new FileOutputStream(file);
+	    	XSSFWorkbook wb = new XSSFWorkbook();
+	    	XSSFSheet sheet = wb.createSheet("Sheet1");
+	    	int rNum = 0;
+	    	XSSFRow row = sheet.createRow(rNum);
+	    	int cNum = 0;
+	    	XSSFCell cell = row.createCell(cNum);
+	    	cell.setCellValue("My Cell Value");
+	    	wb.write(fileOut);
+	    	fileOut.close();
+	    	return ok(file);
+    	} catch(Exception e) {
+    		flash("success", "Error generating report: " + e.getMessage());
+            return GO_HOME;
+    	}
     }
 
 

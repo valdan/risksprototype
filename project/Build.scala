@@ -13,7 +13,9 @@ object ApplicationBuild extends Build {
     javaJdbc,
     javaEbean,
     "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
-    "com.typesafe" %% "play-plugins-mailer" % "2.1-RC2"
+    "com.typesafe" %% "play-plugins-mailer" % "2.1-RC2",
+    "org.apache.poi" % "poi" % "3.8",
+    "org.apache.poi" % "poi-ooxml" % "3.8"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
