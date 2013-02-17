@@ -10,6 +10,7 @@
 
     <dl id="user">
         <dt>Current user: @user.name <span>(@user.email)</span></dt>
+        <dt>Current user role: <span>@User.getRole(user.id)</span></dt>
     </dl>
 
     @form(routes.Application.update(id)) {
@@ -19,7 +20,7 @@
             @inputText(riskForm("name"), '_label -> "Risk name")
             @inputText(riskForm("description"), '_label -> "Risk description")
 
-			@if(user.name == "a") {
+			@if(User.getRole(user.id) == "VALIDATE") {
 				@inputText(riskForm("introduced"), '_label -> "Introduced date")
 			} else {
 			}

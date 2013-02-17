@@ -32,6 +32,14 @@ public class Application extends Controller {
         return GO_HOME;
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result admin() {
+    	return ok(
+            admin.render(User.findByName(request().username()))
+        );
+    }
+
+
     /**
      * Display the paginated list of risks.
      *
@@ -179,8 +187,8 @@ public class Application extends Controller {
 	public static Result listUsers() {
 		 return ok(
             usersList.render(
-                User.findAll()
-            )
+                User.findAll(),
+                User.findByName(request().username()))
         );
 	  }
 
@@ -225,7 +233,7 @@ public class Application extends Controller {
 			//sends html
 //			mail.sendHtml("<html>html</html>" );
 			//sends text/text
-			mail.send( "Please check following Risk " + risk.name + " : " + baseUrl + "/risks/" + risk.id);
+			mail.send( "Please check following Risk (" + risk.name + ") : " + baseUrl + "/risks/" + risk.id);
 			//sends both text and html
 //			mail.send( "text", "<html>html</html>");
 			flash("success", "Mail Sent! Verification of risk: " + risk.name);

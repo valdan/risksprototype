@@ -11,17 +11,14 @@
 
         <header class="topbar">
             <h1 class="fill">
-                <a href="@routes.Application.index()">
-                    Risks Prototype
-                </a>
+                <a href="@routes.Application.index()">Risks Home</a>
+                <span> - </span><a href="@routes.Application.admin()">Admin</a>
                 <span> - </span><a href="@routes.Application.logout()">Logout</a>
-                <span> - </span><a href="@routes.Application.listUsers()">Users</a>
             </h1>
         </header>
 
        <section id="main">
             @content
         </section>
-
     </body>
 </html>

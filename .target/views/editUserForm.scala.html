@@ -14,6 +14,14 @@
             @inputText(userForm("email"), '_label -> "User email")
             @inputText(userForm("name"), '_label -> "User name")
             @inputText(userForm("password"), '_label -> "User password")
+
+            @select(
+                userForm("role.id"),
+                options(Role.options),
+                '_label -> "Role",
+                '_showConstraints -> false
+            )
+
         </fieldset>
 
         <div class="actions">

@@ -1,0 +1,22 @@
+@(user: User)
+
+@main {
+
+    <h1 id="homeTitle">Administration</h1>
+
+	<dl id="user">
+        <dt>Current user: @user.name <span>(@user.email)</span></dt>
+        <dt>Current user role: <span>@User.getRole(user.id)</span></dt>
+    </dl>
+
+	@if(User.getRole(user.id) == "ADMIN") {
+		<h2>
+		    <ul>
+		   		<a href="@routes.Application.listUsers()">Admin Users</a>
+		    </ul>
+	    </h2>
+    } else {
+    	<h2>You don't have administration rights!</h2>
+    }
+
+}

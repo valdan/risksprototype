@@ -29,6 +29,9 @@ public class User extends Model {
     @Constraints.Required
     public String password;
 
+    @ManyToOne
+    public Role role;
+
     // -- Queries
 
     public static Model.Finder<Long,User> find = new Model.Finder(Long.class, User.class);
@@ -71,6 +74,11 @@ public class User extends Model {
             options.put(c.id.toString(), c.email);
         }
         return options;
+    }
+
+
+    public static String getRole(Long id) {
+    	return find.byId(id).role.name;
     }
 
 

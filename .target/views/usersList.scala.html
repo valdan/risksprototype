@@ -1,4 +1,4 @@
-@(users: List[User])
+@(users: List[User], currentUser: User)
 
 @import helper._
 
@@ -8,7 +8,12 @@
 
     <h1 id="homeTitle">Users</h1>
 
-	<h1>@users.size() user(s)</h1>
+    <dl id="user">
+        <dt>Current user: @currentUser.name <span>(@currentUser.email)</span></dt>
+        <dt>Current user role: <span>@User.getRole(currentUser.id)</span></dt>
+    </dl>
+
+	<h1>@(users.size()-1) user(s)</h1>
 
 	@if(flash.containsKey("success")) {
         <div class="alert-message warning">
@@ -18,9 +23,11 @@
 
     <ul>
         @for(user <- users) {
+            @if(currentUser.id != user.id) {
             <li>
                 <a href="@routes.Application.editUser(user.id)">@user.name</a> - @user.email
             </li>
+            }
         }
     </ul>
 
