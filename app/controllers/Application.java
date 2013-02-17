@@ -225,7 +225,7 @@ public class Application extends Controller {
 			//sends html
 //			mail.sendHtml("<html>html</html>" );
 			//sends text/text
-			mail.send( "Please check following Risk: " + baseUrl + "/risks/" + risk.id);
+			mail.send( "Please check following Risk " + risk.name + " : " + baseUrl + "/risks/" + risk.id);
 			//sends both text and html
 //			mail.send( "text", "<html>html</html>");
 			flash("success", "Mail Sent! Verification of risk: " + risk.name);
