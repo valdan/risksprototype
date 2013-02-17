@@ -1,0 +1,31 @@
+@(id: Long, emailForm: Form[Application.EmailForm])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main {
+
+    <h1>Email</h1>
+
+    @form(routes.Application.sendEmail(id)) {
+
+        <fieldset>
+
+			 @select(
+                emailForm("userId"),
+                options(User.options),
+                '_label -> "User", '_default -> "-- Choose a person--",
+                '_showConstraints -> false
+            )
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Send" class="btn primary"> or
+            <a href="@routes.Application.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+}

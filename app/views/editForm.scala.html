@@ -9,7 +9,7 @@
     <h1>Edit risk</h1>
 
     <dl id="user">
-        <dt>@user.name <span>(@user.email)</span></dt>
+        <dt>Current user: @user.name <span>(@user.email)</span></dt>
     </dl>
 
     @form(routes.Application.update(id)) {
@@ -35,7 +35,7 @@
 
         <div class="actions">
             <input type="submit" value="Save this risk" class="btn primary"> or
-            <a href="@routes.Application.list()" class="btn">Cancel</a>
+            <a href="@routes.Application.list()" class="btn">Cancel</a> or <a href="@routes.Application.email(id)" class="btn">Send email</a>
         </div>
 
     }

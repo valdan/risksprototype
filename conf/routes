@@ -9,6 +9,19 @@ GET     /login                  controllers.Application.login()
 POST    /login                  controllers.Application.authenticate()
 GET     /logout                 controllers.Application.logout()
 
+# Users
+GET     /users                  controllers.Application.listUsers()
+
+# Edit existing user
+GET     /users/:id           	controllers.Application.editUser(id:Long)
+POST    /users/:id           	controllers.Application.updateUser(id:Long)
+
+GET     /email/:id           	controllers.Application.email(id:Long)
+POST    /email/:id           	controllers.Application.sendEmail(id:Long)
+
+# Delete a user
+POST    /users/:id/delete    	controllers.Application.deleteUser(id:Long)
+
 # Risks list (look at the default values for pagination parameters)
 GET     /risks                  controllers.Application.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 

@@ -4,8 +4,9 @@ import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
 import views.html.*;
-
 import models.*;
+import com.typesafe.plugin.*;
+import javax.mail.*;
 
 /**
  * Manage a database of risks
@@ -17,6 +18,10 @@ public class Application extends Controller {
      */
     public static Result GO_HOME = redirect(
         routes.Application.list(0, "name", "asc", "")
+    );
+
+    public static Result GO_HOME_USERS = redirect(
+		 routes.Application.listUsers()
     );
 
     /**
@@ -59,7 +64,7 @@ public class Application extends Controller {
             editForm.render(
             		id,
             		riskForm,
-            		User.find.byId(request().username()))
+            		User.findByName(request().username()))
         );
     }
 
@@ -75,7 +80,7 @@ public class Application extends Controller {
             return badRequest(editForm.render(
             			id,
             			riskForm,
-            			User.find.byId(request().username())));
+            			User.findByName(request().username())));
         }
         riskForm.get().update(id);
         flash("success", "Risk " + riskForm.get().name + " has been updated");
@@ -122,11 +127,11 @@ public class Application extends Controller {
 
     public static class Login {
 
-        public String email;
+        public String name;
         public String password;
 
         public String validate() {
-            if(User.authenticate(email, password) == null) {
+            if(User.authenticate(name, password) == null) {
                 return "Invalid user or password";
             }
             return null;
@@ -151,7 +156,7 @@ public class Application extends Controller {
         if(loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
-            session("email", loginForm.get().email);
+            session("name", loginForm.get().name);
             return redirect(
                 routes.Application.index()
             );
@@ -170,5 +175,103 @@ public class Application extends Controller {
     }
 
 
-}
+	@Security.Authenticated(Secured.class)
+	public static Result listUsers() {
+		 return ok(
+            usersList.render(
+                User.findAll()
+            )
+        );
+	  }
 
+
+	@Security.Authenticated(Secured.class)
+	public static Result createUser() {
+	    return TODO;
+	}
+
+	public static class EmailForm {
+
+        public Long userId;
+
+    }
+
+
+	@Security.Authenticated(Secured.class)
+	public static Result email(Long id) {
+		Form<EmailForm> ef = form(EmailForm.class);
+
+		return ok(
+            emailForm.render(
+        		id,
+        		ef)
+        );
+	}
+
+
+	@Security.Authenticated(Secured.class)
+	public static Result sendEmail(Long id) {
+		Form<EmailForm> ef = form(EmailForm.class).bindFromRequest();
+
+		try {
+			String baseUrl = play.Play.application().configuration().getString("application.baseUrl");
+
+			User user = User.find.byId(ef.get().userId);
+			Risk risk = Risk.find.byId(id);
+			MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+			mail.setSubject("Please Inspect Risk ...");
+			mail.addRecipient(user.email);
+			mail.addFrom("VAL-DAN <daniel.vladescu@gmail.com>");
+			//sends html
+//			mail.sendHtml("<html>html</html>" );
+			//sends text/text
+			mail.send( "Please check following Risk: " + baseUrl + "/risks/" + risk.id);
+			//sends both text and html
+//			mail.send( "text", "<html>html</html>");
+			flash("success", "Mail Sent! Verification of risk: " + risk.name);
+		} catch(Exception ex ) {
+			// TODO: inspect what is happening here
+			flash("success", "Sent Failed. Please check Your recipient!");
+		}
+
+        return GO_HOME;
+	}
+
+
+//	@Security.Authenticated(Secured.class)
+	public static Result editUser(Long id) {
+		Form<User> userForm = form(User.class).fill(
+			 User.find.byId(id)
+        );
+        return ok(
+            editUserForm.render(
+            		id,
+            		userForm)
+        );
+	 }
+
+
+	@Security.Authenticated(Secured.class)
+	public static Result updateUser(Long id) {
+		Form<User> userForm = form(User.class).bindFromRequest();
+        if(userForm.hasErrors()) {
+            return badRequest(editUserForm.render(
+            		id,
+            		userForm));
+        }
+
+        userForm.get().update(id);
+        flash("success", "User " + userForm.get().name + " has been updated");
+        return GO_HOME_USERS;
+	 }
+
+
+//	@Security.Authenticated(Secured.class)
+	 public static Result deleteUser(Long id) {
+		User.find.byId(id).delete();
+        flash("success", "User has been deleted");
+        return GO_HOME_USERS;
+	 }
+
+
+}

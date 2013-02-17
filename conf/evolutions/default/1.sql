@@ -3,10 +3,11 @@
 # --- !Ups
 
 create table account (
+  id                        bigint not null,
   email                     varchar(255) not null,
-  name                      varchar(255),
+  name                      varchar(255) not null,
   password                  varchar(255),
-  constraint pk_account primary key (email)
+  constraint pk_account primary key (id)
 );
 
 create table matrixunit (
