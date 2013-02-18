@@ -1,4 +1,16 @@
-This is your new Play 2.1 application
+Risks application
 =====================================
 
 This file will be packaged with your application, when using `play dist`.
+
+Sample Application for Risks.
+
+Users:
+
+- Admin with admin as password: Administrator ROLE.
+- Creator with admin as password. Creator ROLE.
+- Validator with admin as password. Validator ROLE.
+
+
+
+

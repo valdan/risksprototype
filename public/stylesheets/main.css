@@ -27,6 +27,11 @@ section#main .topRight {
     top: 70px;
 }
 
+#separator{
+	 background: #c7d1d8;
+	 font-weight: bold;
+}
+
 table.risks em {
     color: #aaa;
 }

@@ -32,6 +32,30 @@ public class Risk extends Model {
     @ManyToOne
     public Matrixunit matrixunit;
 
+    public String stage;
+
+    public String ra;
+
+    public String service;
+
+    public String location;
+
+    public String developer;
+
+    public String host;
+
+    public String manager;
+
+    public String confidential;
+
+    public String imported;
+
+    public String exported;
+
+    public String comment;
+
+    public String criticaldate;
+
     /**
      * Generic query helper for entity Risk with id Long
      */
@@ -57,4 +81,3 @@ public class Risk extends Model {
     }
 
 }
-

@@ -64,21 +64,80 @@ public class Application extends Controller {
 
     	try {
     		List<Risk> risks = Risk.find.orderBy("name").findList();
+
 	    	FileOutputStream fileOut = new FileOutputStream(file);
 	    	XSSFWorkbook wb = new XSSFWorkbook();
 	    	XSSFSheet sheet = wb.createSheet("Sheet1");
 
-	    	int nrCols = 3;
+	    	XSSFRow row = sheet.createRow(0);
+	    	XSSFCell cell = row.createCell(0);
+	    	cell.setCellValue("Name");
+	    	cell = row.createCell(1);
+	    	cell.setCellValue("Description");
+	    	cell = row.createCell(2);
+	    	cell.setCellValue("introduced");
+	    	cell = row.createCell(3);
+	    	cell.setCellValue("stage");
+	    	cell = row.createCell(4);
+	    	cell.setCellValue("Risk Ass");
+	    	cell = row.createCell(5);
+	    	cell.setCellValue("service");
+	    	cell = row.createCell(6);
+	    	cell.setCellValue("location");
+	    	cell = row.createCell(7);
+	    	cell.setCellValue("developer");
+	    	cell = row.createCell(8);
+	    	cell.setCellValue("host");
+	    	cell = row.createCell(9);
+	    	cell.setCellValue("manager");
+	    	cell = row.createCell(10);
+	    	cell.setCellValue("confidential");
+	    	cell = row.createCell(11);
+	    	cell.setCellValue("imported");
+	    	cell = row.createCell(12);
+	    	cell.setCellValue("exported");
+	    	cell = row.createCell(13);
+	    	cell.setCellValue("comment");
+	    	cell = row.createCell(14);
+	    	cell.setCellValue("criticaldate");
 
-	    	// rows: risks
-	    	int rNum = 0;
-	    	XSSFRow row = sheet.createRow(rNum);
+	    	row = sheet.createRow(1);
 
-	    	// columns
-	    	int cNum = 0;
-	    	XSSFCell cell = row.createCell(cNum);
-
-	    	cell.setCellValue("My Cell Value");
+	    	int i = 0;
+	    	for (Risk risk : risks) {
+	    		row = sheet.createRow(2 + i);
+	    		cell = row.createCell(0);
+		    	cell.setCellValue(risk.name!=null?risk.name:"");
+		    	cell = row.createCell(1);
+		    	cell.setCellValue(risk.description!=null?risk.description:"");
+		    	cell = row.createCell(2);
+		    	cell.setCellValue(risk.introduced!=null?risk.introduced.toString():"");
+		    	cell = row.createCell(3);
+		    	cell.setCellValue(risk.stage!=null?risk.stage:"");
+		    	cell = row.createCell(4);
+		    	cell.setCellValue(risk.ra!=null?risk.ra:"");
+		    	cell = row.createCell(5);
+		    	cell.setCellValue(risk.service!=null?risk.service:"");
+		    	cell = row.createCell(6);
+		    	cell.setCellValue(risk.location!=null?risk.location:"");
+		    	cell = row.createCell(7);
+		    	cell.setCellValue(risk.developer!=null?risk.developer:"");
+		    	cell = row.createCell(8);
+		    	cell.setCellValue(risk.host!=null?risk.host:"");
+		    	cell = row.createCell(9);
+		    	cell.setCellValue(risk.manager!=null?risk.manager:"");
+		    	cell = row.createCell(10);
+		    	cell.setCellValue(risk.confidential!=null?risk.confidential:"");
+		    	cell = row.createCell(11);
+		    	cell.setCellValue(risk.imported!=null?risk.imported:"");
+		    	cell = row.createCell(12);
+		    	cell.setCellValue(risk.exported!=null?risk.exported:"");
+		    	cell = row.createCell(13);
+		    	cell.setCellValue(risk.comment!=null?risk.comment:"");
+		    	cell = row.createCell(14);
+		    	cell.setCellValue(risk.criticaldate!=null?risk.criticaldate:"");
+		    	i++;
+			}
 	    	wb.write(fileOut);
 	    	fileOut.close();
 	    	return ok(file);
@@ -152,7 +211,7 @@ public class Application extends Controller {
     public static Result create() {
         Form<Risk> riskForm = form(Risk.class);
         return ok(
-            createForm.render(riskForm)
+            createForm.render(riskForm, User.findByName(request().username()))
         );
     }
 
@@ -163,7 +222,7 @@ public class Application extends Controller {
     public static Result save() {
         Form<Risk> riskForm = form(Risk.class).bindFromRequest();
         if(riskForm.hasErrors()) {
-            return badRequest(createForm.render(riskForm));
+            return badRequest(createForm.render(riskForm, User.findByName(request().username())));
         }
         riskForm.get().save();
         flash("success", "Risk " + riskForm.get().name + " has been created");

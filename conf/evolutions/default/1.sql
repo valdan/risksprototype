@@ -31,6 +31,18 @@ create table risk (
   description               varchar(255),
   introduced                timestamp,
   matrixunit_id             bigint,
+  stage                     varchar(255),
+  ra                     	varchar(255),
+  service                   varchar(255),
+  location                  varchar(255),
+  developer                 varchar(255),
+  host                      varchar(255),
+  manager                   varchar(255),
+  confidential              varchar(255),
+  imported                  varchar(255),
+  exported                  varchar(255),
+  comment					varchar(255),
+  criticaldate				varchar(255),
   constraint pk_risk primary key (id))
 ;
 

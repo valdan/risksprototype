@@ -21,12 +21,49 @@ insert into account (id,email,name,password,role_id) values (3,'pauldani24@yahoo
 
 
 --- Risks
-insert into risk (id,name,description,introduced,matrixunit_id) values (  1,'Risk 1','Risk 1 desc',null,1);
+insert into risk (
+	id,
+	name,
+	description,
+	introduced,
+	matrixunit_id,
+	stage,
+	ra,
+	service,
+	location,
+	developer,
+	host,
+	manager,
+	confidential,
+	imported,
+	exported,
+	comment,
+	criticaldate)
+	values
+	(
+	1,
+	'Risk 1',
+	'Risk 1 desc',
+	null,
+	1,
+	'new Service',
+	'yes',
+	'regional',
+	'corporate network',
+	'it services',
+	'it services',
+	'internal department',
+	'yes',
+	'no',
+	'yes',
+	'this is my best guess',
+	'None');
 
 # --- !Downs
 
 delete from matrixunit;
 delete from risk;
 delete from account;
+delete from role;
 
 

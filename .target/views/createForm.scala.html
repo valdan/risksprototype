@@ -1,4 +1,4 @@
-@(riskForm: Form[Risk])
+@(riskForm: Form[Risk], user: User)
 
 @import helper._
 
@@ -8,14 +8,18 @@
 
     <h1>Add a risk</h1>
 
+    <dl id="user">
+        <dt>Current user: @user.name <span>(@user.email)</span></dt>
+        <dt>Current user role: <span>@User.getRole(user.id)</span></dt>
+    </dl>
+
     @form(routes.Application.save()) {
 
         <fieldset>
-
+			<div id="separator">General:</div>
             @inputText(riskForm("name"), '_label -> "Risk name")
             @inputText(riskForm("description"), '_label -> "Risk description")
-            @inputText(riskForm("introduced"), '_label -> "Introduced date")
-
+			@inputText(riskForm("introduced"), '_label -> "Introduced date")
             @select(
                 riskForm("matrixunit.id"),
                 options(Matrixunit.options),
@@ -23,6 +27,28 @@
                 '_showConstraints -> false
             )
 
+             @inputText(riskForm("stage"), '_label -> "In what stage of the IT life cycle is Your information resource?")
+             @inputText(riskForm("ra"), '_label -> "Has any kind of dexurity/risk assessment been performed?")
+
+             @inputText(riskForm("service"), '_label -> "Where is the Service/Application used?")
+
+             @inputText(riskForm("location"), '_label -> "From where can the Service/Application be used?")
+             @inputText(riskForm("developer"), '_label -> "Who was this Service/Application developed by?")
+             @inputText(riskForm("host"), '_label -> "The Service/Application is hosted by")
+             @inputText(riskForm("manager"), '_label -> "The Service/Application is managed by")
+
+			 <div id="separator">Data:</div>
+             @if(User.getRole(user.id) == "CREATE" || User.getRole(user.id) == "VALIDATE") {
+	             @inputText(riskForm("confidential"), '_label -> "Is confidential of strictly confidential data stored in the application?")
+	             @inputText(riskForm("imported"), '_label -> "Is Data imported or copied from other Services/Applications?")
+	             @inputText(riskForm("exported"), '_label -> "Is Data from this Sevice/Application used by other Services/Applications?")
+	         }
+			 <br/>
+			 <div id="separator">Business Impact (Please discuss this with your information Manager or business users):</div>
+			 @if(User.getRole(user.id) == "VALIDATE") {
+             	@inputText(riskForm("comment"), '_label -> "Comment or background information in order to understand above grading")
+             	@inputText(riskForm("criticaldate"), '_label -> "Critical dates: Is the availability of the Service/Application critical at specific dates")
+             }
 
         </fieldset>
 
