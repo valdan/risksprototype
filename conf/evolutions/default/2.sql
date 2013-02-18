@@ -21,43 +21,12 @@ insert into account (id,email,name,password,role_id) values (3,'pauldani24@yahoo
 
 
 --- Risks
-insert into risk (
-	id,
-	name,
-	description,
-	introduced,
-	matrixunit_id,
-	stage,
-	ra,
-	service,
-	location,
-	developer,
-	host,
-	manager,
-	confidential,
-	imported,
-	exported,
-	comment,
-	criticaldate)
-	values
-	(
-	1,
-	'Risk 1',
-	'Risk 1 desc',
-	null,
-	1,
-	'new Service',
-	'yes',
-	'regional',
-	'corporate network',
-	'it services',
-	'it services',
-	'internal department',
-	'yes',
-	'no',
-	'yes',
-	'this is my best guess',
-	'None');
+insert into risk (id,name,description,introduced,matrixunit_id,stage,ra,service,location,developer,host,manager,confidential,imported,exported,comment,criticaldate)
+	values(1,'Risk 1','Risk 1 desc',null,1,'new Service','yes','regional','corporate network','it services','it services','internal department','yes','no','yes','this is my best guess','None');
+insert into risk (id,name,description,introduced,matrixunit_id,stage,ra,service,location,developer,host,manager,confidential,imported,exported,comment,criticaldate)
+	values(2,'Risk 2','Risk 2 desc',null,2,'old Service','yes','regional2','corporate network2','it services2','it services2','internal department2','no','yes','no','comment 2','Q2');
+insert into risk (id,name,description,introduced,matrixunit_id,stage,ra,service,location,developer,host,manager,confidential,imported,exported,comment,criticaldate)
+	values(3,'Risk 3','Risk 3 desc',null,3,'deprecated Service','no','regional3','corporate network3','it services3','it services3','internal department3','no','yes','no','comment 3','Q3');
 
 # --- !Downs
 
