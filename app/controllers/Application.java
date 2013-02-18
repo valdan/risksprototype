@@ -9,6 +9,8 @@ import com.typesafe.plugin.*;
 import javax.mail.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
+
 import org.apache.poi.xssf.usermodel.*;
 
 /**
@@ -20,7 +22,11 @@ public class Application extends Controller {
      * This result directly redirect to application home.
      */
     public static Result GO_HOME = redirect(
-        routes.Application.list(0, "name", "asc", "")
+        routes.Application.list(
+        		0,
+        		"name",
+        		"asc",
+        		"")
     );
 
     public static Result GO_HOME_USERS = redirect(
@@ -51,18 +57,27 @@ public class Application extends Controller {
     }
 
 
+    // Sample risks report
     public static Result risksReports() {
 
     	File file = new File("test.xlsx");
 
     	try {
+    		List<Risk> risks = Risk.find.orderBy("name").findList();
 	    	FileOutputStream fileOut = new FileOutputStream(file);
 	    	XSSFWorkbook wb = new XSSFWorkbook();
 	    	XSSFSheet sheet = wb.createSheet("Sheet1");
+
+	    	int nrCols = 3;
+
+	    	// rows: risks
 	    	int rNum = 0;
 	    	XSSFRow row = sheet.createRow(rNum);
+
+	    	// columns
 	    	int cNum = 0;
 	    	XSSFCell cell = row.createCell(cNum);
+
 	    	cell.setCellValue("My Cell Value");
 	    	wb.write(fileOut);
 	    	fileOut.close();
@@ -87,7 +102,8 @@ public class Application extends Controller {
         return ok(
             list.render(
                 Risk.page(page, 10, sortBy, order, filter),
-                sortBy, order, filter
+                sortBy, order, filter,
+                User.findByName(request().username())
             )
         );
     }

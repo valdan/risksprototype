@@ -23,3 +23,4 @@ object ApplicationBuild extends Build {
   )
 
 }
+

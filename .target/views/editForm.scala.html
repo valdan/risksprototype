@@ -41,8 +41,10 @@
 
     }
 
-    @form(routes.Application.delete(id), 'class -> "topRight") {
-        <input type="submit" value="Delete this risk" class="btn danger">
+	@if(User.getRole(user.id) == "ADMIN" || User.getRole(user.id) == "CREATE") {
+	    @form(routes.Application.delete(id), 'class -> "topRight") {
+	        <input type="submit" value="Delete this risk" class="btn danger">
+	    }
     }
 
 }
